@@ -7,7 +7,7 @@ int i, j;
 char intercamp[5][5];
 int camp[5][5] = {0};
 
-//Faz o campo que aparece para o usuário.
+//Faz a interface do campo para o usuário.
 void build1(void){
 	for(i = 0; i < 5; i++){
 		for(j = 0; j < 5; j++){
@@ -40,22 +40,35 @@ int check(int line, int col){
 		return 0;
 	}
 }
-
-int test (int x){
+//Exibe todas as bombas na matriz.
+int showBombs (int x){
 	if(x == 1){
 		for(i = 0; i < 5; i++){
 			for(j = 0; j < 5; j++){
 				if(camp[i][j] == 1){
 					intercamp[i][j] = 'O';
-				}else{
-					intercamp[i][j] = '-';
 				}
 			}
 		}
-		return 1;
+		return 0;
 	}
-
     return 0;
+}
+//Detecta e mostra quantas bombas tem em volta da posição escolhida.
+void radar (int line, int col){
+    int qnt = 0;
+    for(int i = line-1; i<=line+1; i++){
+        for(int j = col-1; j<=col+1; j++){
+            if(camp[i][j] != camp[line][col]){
+                if(i<0 || i>4 || j<0 || j>4){
+                }else{
+                qnt++;
+                }
+            }
+        }
+    }
+    if(qnt == 0)intercamp[line][col] = ' ';
+    else intercamp[line][col] = '0' + qnt;
 }
 
 int main(){
@@ -64,14 +77,14 @@ int main(){
 	build1();
 	build2();
 	//Apresentação do jogo. :P
-	Sleep(2000);
+	Sleep(1500);
 	printf("\n\n\n\t\t\tBem vindo(a) ao campo minado!");
-	Sleep(2000);
+	Sleep(1500);
 	printf("\n\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
-	Sleep(5000);
+	Sleep(3000);
 	
 	//O jogo.
-	int times = 20;
+	int times = 20; //20 jogadas, pois, no exemplo, a matriz é 5x5, havendo 5 bombas.
 	do{
 	for(i = 0; i < 5; i++){
 		printf("\t\t\t\t ");
@@ -80,12 +93,20 @@ int main(){
 		}
 		printf("\n");
 	}
+    int x, y;
 	printf("\n\t\tSelecione uma posição: (x y) --> ");
-	scanf("%d" "%d", &i, &j);
+	scanf("%d" "%d", &x, &y);
+    
 	int select;
-	select = check(i, j);
-	select = test(select);
+	select = check(x, y);
+	showBombs(select);
 	system("cls");
+
+    printf("\n\n\n\t\t\tBem vindo(a) ao campo minado!");
+	printf("\n\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
+    //Impressao por razoes esteticas.
+
+    //Encerra o jogo caso o usuario tenha escolhido um local com bomba
 	if(select == 1){
 		for(i = 0; i < 5; i++){
 			printf("\t\t\t\t ");
@@ -94,17 +115,15 @@ int main(){
 			}
 			printf("\n");
 		}
-		printf("\n\t\t\tPisou na bomba, já era! :(");
+		printf("\n\t\t\tPisou na bomba, já era! :(\n");
 		return 0;
 	}
+    radar(x, y);
 	times--;
-	
-	printf("\n\n\n\t\t\tBem vindo(a) ao campo minado!");
-	printf("\n\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
 
 	}while(times > 0);
 	
 	printf("er eer er!!!");
 	system("pause");
-	
+	return 0;
 }

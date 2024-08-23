@@ -1,0 +1,5 @@
+Lembrar de fazer um tratamento para caso o usuário escolha um local fora da matriz;
+
+Criar uma lógica para que mais espaço seja 'liberado', como no jogo original;
+
+Tentar inserir a mecânica de bandeiras;
