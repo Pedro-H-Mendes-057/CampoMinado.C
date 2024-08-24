@@ -46,7 +46,7 @@ int showBombs (int x){
 		for(i = 0; i < 5; i++){
 			for(j = 0; j < 5; j++){
 				if(camp[i][j] == 1){
-					intercamp[i][j] = 'O';
+					intercamp[i][j] = 'X';
 				}
 			}
 		}
@@ -67,8 +67,7 @@ void radar (int line, int col){
             }
         }
     }
-    if(qnt == 0)intercamp[line][col] = ' ';
-    else intercamp[line][col] = '0' + qnt;
+    intercamp[line][col] = '0' + qnt;
 }
 
 int main(){
@@ -78,52 +77,64 @@ int main(){
 	build2();
 	//Apresentação do jogo. :P
 	Sleep(1500);
-	printf("\n\n\n\t\t\tBem vindo(a) ao campo minado!");
+	printf("\n\n\n\t\t\t\tBem vindo(a) ao campo minado!");
 	Sleep(1500);
-	printf("\n\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
+	printf("\n\t\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
 	Sleep(3000);
 	
 	//O jogo.
 	int times = 20; //20 jogadas, pois, no exemplo, a matriz é 5x5, havendo 5 bombas.
 	do{
+	printf("\t\t\t\t    1   2   3   4   5\n\n");
 	for(i = 0; i < 5; i++){
-		printf("\t\t\t\t ");
+		printf("\t\t\t\t%d", i+1);
 		for(j = 0; j < 5; j++){
-			printf(" %c", intercamp[i][j]);
+			printf("   %c", intercamp[i][j]);
 		}
-		printf("\n");
+		printf("\n\n");
 	}
     int x, y;
-	printf("\n\t\tSelecione uma posição: (x y) --> ");
+	printf("\n\t\t\tSelecione uma posição: (x y) --> ");
 	scanf("%d" "%d", &x, &y);
-    
+	x--;
+    y--;
 	int select;
 	select = check(x, y);
 	showBombs(select);
 	system("cls");
 
-    printf("\n\n\n\t\t\tBem vindo(a) ao campo minado!");
-	printf("\n\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
+    printf("\n\n\n\t\t\t\tBem vindo(a) ao campo minado!");
+	printf("\n\t\t  Marque todos os lugares livres de bombas ou morra tentando!\n\n");
     //Impressao por razoes esteticas.
 
     //Encerra o jogo caso o usuario tenha escolhido um local com bomba
 	if(select == 1){
+		printf("\t\t\t\t    1   2   3   4   5\n\n");
 		for(i = 0; i < 5; i++){
-			printf("\t\t\t\t ");
+			printf("\t\t\t\t%d", i+1);
 			for(j = 0; j < 5; j++){
-				printf(" %c", intercamp[i][j]);
+				printf("   %c", intercamp[i][j]);
 			}
-			printf("\n");
+			printf("\n\n");
 		}
-		printf("\n\t\t\tPisou na bomba, já era! :(\n");
+		printf("\n\t\t\tPisou na bomba, já era! :(\n\n");
 		return 0;
 	}
     radar(x, y);
 	times--;
 
 	}while(times > 0);
-	
-	printf("er eer er!!!");
+
+	//Imprime a tabela uma ultima vez, indicando a vitoria!
+	printf("\t\t\t\t    1   2   3   4   5\n\n");
+	for(i = 0; i < 5; i++){
+		printf("\t\t\t\t%d", i+1);
+		for(j = 0; j < 5; j++){
+			printf("   %c", intercamp[i][j]);
+		}
+		printf("\n\n");
+	}
+	printf("\n\t\t\tParabéns, você conseguiu!!! :D\n\n");
 	system("pause");
 	return 0;
 }
